@@ -63,6 +63,9 @@ pytest tests/ -k "property"
 
 # Integration tests
 pytest tests/integration/
+
+# All tests including backward compatibility (requires original files)
+pytest -c pytest-local.ini
 ```
 
 ## Documentation
