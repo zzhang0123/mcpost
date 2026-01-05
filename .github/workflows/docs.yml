@@ -56,14 +56,14 @@ jobs:
         # Convert Jupyter notebooks to HTML (with error handling)
         if [ -f "docs/tutorials/getting_started.ipynb" ] && [ -s "docs/tutorials/getting_started.ipynb" ]; then
           echo "Converting getting_started.ipynb..."
-          jupyter nbconvert --to html docs/tutorials/getting_started.ipynb --output-dir _site/docs/tutorials/ || echo "Failed to convert getting_started.ipynb"
+          jupyter nbconvert --to html docs/tutorials/getting_started.ipynb --output-dir _site/docs/tutorials/ --template basic || echo "Failed to convert getting_started.ipynb"
         else
           echo "Skipping getting_started.ipynb (empty or missing)"
         fi
         
         if [ -f "docs/tutorials/gsa_comprehensive.ipynb" ] && [ -s "docs/tutorials/gsa_comprehensive.ipynb" ]; then
           echo "Converting gsa_comprehensive.ipynb..."
-          jupyter nbconvert --to html docs/tutorials/gsa_comprehensive.ipynb --output-dir _site/docs/tutorials/ || echo "Failed to convert gsa_comprehensive.ipynb"
+          jupyter nbconvert --to html docs/tutorials/gsa_comprehensive.ipynb --output-dir _site/docs/tutorials/ --template basic || echo "Failed to convert gsa_comprehensive.ipynb"
         else
           echo "Skipping gsa_comprehensive.ipynb (empty or missing)"
         fi
@@ -156,12 +156,12 @@ jobs:
       uses: actions/jekyll-build-pages@v1
       with:
         source: ./_site
-        destination: ./_site
+        destination: ./_build
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: ./_site
+        path: ./_build
 
   deploy:
     if: github.ref == 'refs/heads/main'
