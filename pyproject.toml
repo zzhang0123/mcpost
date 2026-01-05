@@ -78,10 +78,9 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mcpost/mcpost"
-Documentation = "https://mcpost.readthedocs.io"
-Repository = "https://github.com/mcpost/mcpost"
-"Bug Tracker" = "https://github.com/mcpost/mcpost/issues"
+Homepage = "https://github.com/zzhang0123/mcpost"
+Repository = "https://github.com/zzhang0123/mcpost"
+"Bug Tracker" = "https://github.com/zzhang0123/mcpost/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]

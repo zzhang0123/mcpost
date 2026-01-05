@@ -69,7 +69,7 @@ pytest
 For the latest development version:
 
 ```bash
-pip install git+https://github.com/mcpost/mcpost.git
+pip install git+https://github.com/zzhang0123/mcpost.git
 ```
 
 ### Conda Installation
@@ -224,28 +224,22 @@ result = qmc_integral_auto(
 ## Documentation and Resources
 
 ### Complete Documentation
-- **[API Reference](https://mcpost.readthedocs.io/en/latest/api/)**: Detailed function and class documentation
-- **[User Guide](https://mcpost.readthedocs.io/en/latest/user_guide/)**: Comprehensive usage guide with theory
-- **[Tutorials](https://mcpost.readthedocs.io/en/latest/tutorials/)**: Interactive Jupyter notebooks
-- **[Examples Gallery](https://mcpost.readthedocs.io/en/latest/examples/)**: Real-world application examples
+- **[Getting Started Tutorial](docs/tutorials/getting_started.ipynb)**: Your first MCPost analysis
+- **[GSA Deep Dive](docs/tutorials/gsa_comprehensive.md)**: Advanced sensitivity analysis
+- **[Extension Guide](docs/extension_guide.md)**: Creating custom methods
+- **[Migration Guide](docs/MIGRATION_GUIDE.md)**: Migrating from legacy scripts
 
 ### Quick References
-- **[Installation Guide](docs/installation.md)**: Detailed installation instructions
-- **[GSA Quick Reference](docs/gsa_reference.md)**: GSA methods and parameters
-- **[Integration Quick Reference](docs/integration_reference.md)**: Integration methods and options
-- **[Configuration Guide](docs/configuration.md)**: Customizing MCPost behavior
+- **[Backward Compatibility](docs/BACKWARD_COMPATIBILITY.md)**: Version compatibility policy
+- **[Release Guide](docs/RELEASE_GUIDE.md)**: Release process and versioning
 
 ### Learning Resources
 - **[Getting Started Tutorial](docs/tutorials/getting_started.ipynb)**: Your first MCPost analysis
-- **[GSA Deep Dive](docs/tutorials/gsa_comprehensive.ipynb)**: Advanced sensitivity analysis
-- **[Integration Methods](docs/tutorials/integration_methods.ipynb)**: Comparison of integration approaches
-- **[Performance Optimization](docs/tutorials/performance.ipynb)**: Tips for large-scale analyses
+- **[GSA Deep Dive](docs/tutorials/gsa_comprehensive.md)**: Advanced sensitivity analysis
 
 ### Example Applications
 - **[Climate Modeling](examples/climate_sensitivity.py)**: GSA for climate model parameters
-- **[Financial Risk](examples/financial_risk.py)**: Monte Carlo risk assessment
-- **[Engineering Design](examples/engineering_optimization.py)**: Design parameter sensitivity
-- **[Bayesian Inference](examples/bayesian_integration.py)**: Posterior integration examples
+- **[Integration Comparison](examples/integration_comparison.py)**: Monte Carlo integration examples
 
 ## Requirements
 
@@ -270,7 +264,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ### Development Setup
 
 ```bash
-git clone https://github.com/mcpost/mcpost.git
+git clone https://github.com/zzhang0123/mcpost.git
 cd mcpost
 pip install -e .[dev]
 pytest
@@ -316,7 +310,7 @@ If you use MCPost in your research, please cite:
 @software{mcpost,
   title={MCPost: Monte Carlo Post-analysis Package},
   author={MCPost Contributors},
-  url={https://github.com/mcpost/mcpost},
+  url={https://github.com/zzhang0123/mcpost},
   version={0.1.0},
   year={2024}
 }
