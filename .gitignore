@@ -209,5 +209,5 @@ DEPLOYMENT_FIXES.md
 FIXES_SUMMARY.md
 DOCUMENTATION_STATUS.md
 
-# Original scripts (mock versions for backward compatibility testing)
-# gsa_pipeline.py and mc_int.py are now included for backward compatibility
+# Legacy compatibility mock files (moved to tests/legacy_mocks/)
+# These provide backward compatibility wrappers for testing only

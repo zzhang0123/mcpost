@@ -171,7 +171,7 @@ When upgrading MCPost versions:
 
 #### Migrating from Legacy Scripts
 
-If you're migrating from the original `gsa_pipeline.py` and `mc_int.py` scripts:
+If you're migrating from the original `gsa_pipeline.py` and `mc_int.py` scripts (legacy compatibility mocks are available in `tests/legacy_mocks/` for reference):
 
 **Before (Legacy):**
 ```python

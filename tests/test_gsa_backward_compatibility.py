@@ -5,7 +5,7 @@ Property-based tests for GSA API backward compatibility.
 **Validates: Requirements 2.5**
 
 NOTE: These tests require the original gsa_pipeline.py file to be present
-in the repository root. They are skipped in CI/CD environments and should
+in the tests/legacy_mocks/ directory. They are skipped in CI/CD environments and should
 be run locally during development to verify backward compatibility.
 """
 
@@ -20,6 +20,7 @@ from pathlib import Path
 # Add the package root to path for importing both old and new implementations
 package_root = Path(__file__).parent.parent
 sys.path.insert(0, str(package_root))
+sys.path.insert(0, str(package_root / "tests" / "legacy_mocks"))
 
 # Import the original implementation
 import gsa_pipeline as original_gsa

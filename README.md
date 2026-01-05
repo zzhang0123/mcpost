@@ -290,7 +290,7 @@ pytest tests/ -k "property"
 pytest tests/ --cov=mcpost --cov-report=html
 ```
 
-**Backward Compatibility Tests**: These require the original `gsa_pipeline.py` and `mc_int.py` files and are skipped in CI. For local development:
+**Backward Compatibility Tests**: These require the legacy mock files `gsa_pipeline.py` and `mc_int.py` located in `tests/legacy_mocks/` and are skipped in CI. For local development:
 
 ```bash
 # Place original files in repository root, then:

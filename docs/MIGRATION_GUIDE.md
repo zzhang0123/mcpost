@@ -1,6 +1,6 @@
 # Migration Guide: From Legacy Scripts to MCPost Package
 
-This guide helps users migrate from the original `gsa_pipeline.py` and `mc_int.py` scripts to the new MCPost package.
+This guide helps users migrate from the original `gsa_pipeline.py` and `mc_int.py` scripts to the new MCPost package. Note that legacy compatibility mock files are maintained in `tests/legacy_mocks/` for testing purposes only.
 
 ## Overview
 
