@@ -191,5 +191,23 @@ examples/*.pdf
 *.png
 *.pdf
 
+# Kiro IDE specific files
+.kiro/
+
+# Development and temporary files
+_site/
+_build/
+.jekyll-cache/
+.jekyll-metadata
+
+# Documentation build artifacts
+docs/_build/
+docs/.doctrees/
+
+# Development status files (optional - these track our work progress)
+DEPLOYMENT_FIXES.md
+FIXES_SUMMARY.md
+DOCUMENTATION_STATUS.md
+
 # Original scripts (mock versions for backward compatibility testing)
 # gsa_pipeline.py and mc_int.py are now included for backward compatibility
