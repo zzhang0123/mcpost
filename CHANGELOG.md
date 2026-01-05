@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-01-05
+
+### Removed
+- Formal documentation files (too formal for research package):
+  - Migration guide (docs/MIGRATION_GUIDE.md)
+  - Release guide (docs/RELEASE_GUIDE.md) 
+  - Backward compatibility policy (docs/BACKWARD_COMPATIBILITY.md)
+- Backward compatibility tests (no one used previous version):
+  - tests/test_gsa_backward_compatibility.py
+  - tests/test_integration_backward_compatibility.py
+  - tests/legacy_mocks/ directory
+- Validation scripts for removed features:
+  - scripts/validate_backward_compatibility.py
+
+### Changed
+- Simplified repository structure for research use
+- Updated README.md to remove references to formal governance
+- Streamlined documentation workflow
+- Simplified release validation scripts
+- Cleaner .gitignore configuration
+
+### Infrastructure
+- Lighter, more focused repository structure
+- Reduced maintenance overhead
+- Better suited for research and academic use
+- Simplified documentation deployment
+
 ## [0.1.1] - 2026-01-05
 
 ### Added
