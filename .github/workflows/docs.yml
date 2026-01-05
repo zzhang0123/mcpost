@@ -53,13 +53,19 @@ jobs:
         # Copy tutorials
         cp docs/tutorials/*.md _site/docs/tutorials/ || true
         
-        # Convert Jupyter notebooks to HTML
-        if [ -f "docs/tutorials/getting_started.ipynb" ]; then
-          jupyter nbconvert --to html docs/tutorials/getting_started.ipynb --output-dir _site/docs/tutorials/
+        # Convert Jupyter notebooks to HTML (with error handling)
+        if [ -f "docs/tutorials/getting_started.ipynb" ] && [ -s "docs/tutorials/getting_started.ipynb" ]; then
+          echo "Converting getting_started.ipynb..."
+          jupyter nbconvert --to html docs/tutorials/getting_started.ipynb --output-dir _site/docs/tutorials/ || echo "Failed to convert getting_started.ipynb"
+        else
+          echo "Skipping getting_started.ipynb (empty or missing)"
         fi
         
-        if [ -f "docs/tutorials/gsa_comprehensive.ipynb" ]; then
-          jupyter nbconvert --to html docs/tutorials/gsa_comprehensive.ipynb --output-dir _site/docs/tutorials/
+        if [ -f "docs/tutorials/gsa_comprehensive.ipynb" ] && [ -s "docs/tutorials/gsa_comprehensive.ipynb" ]; then
+          echo "Converting gsa_comprehensive.ipynb..."
+          jupyter nbconvert --to html docs/tutorials/gsa_comprehensive.ipynb --output-dir _site/docs/tutorials/ || echo "Failed to convert gsa_comprehensive.ipynb"
+        else
+          echo "Skipping gsa_comprehensive.ipynb (empty or missing)"
         fi
         
         # Copy examples
