@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   build:
@@ -112,6 +113,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    environment: release
     
     steps:
     - name: Download build artifacts
@@ -120,10 +122,8 @@ jobs:
         name: dist
         path: dist/
 
-    - name: Publish release distributions to PyPI
+    - name: Publish to PyPI using trusted publishing
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         packages-dir: dist/
-        password: ${{ secrets.PYPI_PASSWORD }}
-        skip-existing: true
         verbose: true
