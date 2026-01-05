@@ -81,10 +81,7 @@ def validate_documentation_files() -> List[Dict[str, Any]]:
         'README.md',
         'CHANGELOG.md',
         'LICENSE',
-        'docs/tutorials/gsa_comprehensive.md',
-        'docs/MIGRATION_GUIDE.md',
-        'docs/BACKWARD_COMPATIBILITY.md',
-        'docs/RELEASE_GUIDE.md'
+        'docs/tutorials/gsa_comprehensive.md'
     ]
     
     results = []

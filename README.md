@@ -227,11 +227,8 @@ result = qmc_integral_auto(
 - **[Getting Started Tutorial](docs/tutorials/getting_started.ipynb)**: Your first MCPost analysis
 - **[GSA Deep Dive](docs/tutorials/gsa_comprehensive.md)**: Advanced sensitivity analysis
 - **[Extension Guide](docs/extension_guide.md)**: Creating custom methods
-- **[Migration Guide](docs/MIGRATION_GUIDE.md)**: Migrating from legacy scripts
 
 ### Quick References
-- **[Backward Compatibility](docs/BACKWARD_COMPATIBILITY.md)**: Version compatibility policy
-- **[Release Guide](docs/RELEASE_GUIDE.md)**: Release process and versioning
 
 ### Learning Resources
 - **[Getting Started Tutorial](docs/tutorials/getting_started.ipynb)**: Your first MCPost analysis
@@ -275,7 +272,7 @@ pytest
 MCPost includes a comprehensive test suite:
 
 ```bash
-# Run all tests (excludes backward compatibility tests)
+# Run all tests
 pytest tests/
 
 # Run specific test categories
@@ -288,14 +285,6 @@ pytest tests/ -k "property"
 
 # Run with coverage
 pytest tests/ --cov=mcpost --cov-report=html
-```
-
-**Backward Compatibility Tests**: These require the legacy mock files `gsa_pipeline.py` and `mc_int.py` located in `tests/legacy_mocks/` and are skipped in CI. For local development:
-
-```bash
-# Place original files in repository root, then:
-pytest tests/test_gsa_backward_compatibility.py
-pytest tests/test_integration_backward_compatibility.py
 ```
 
 ## License

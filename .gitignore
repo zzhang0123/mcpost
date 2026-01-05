@@ -208,6 +208,3 @@ docs/.doctrees/
 DEPLOYMENT_FIXES.md
 FIXES_SUMMARY.md
 DOCUMENTATION_STATUS.md
-
-# Legacy compatibility mock files (moved to tests/legacy_mocks/)
-# These provide backward compatibility wrappers for testing only

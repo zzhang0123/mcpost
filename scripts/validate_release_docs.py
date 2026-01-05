@@ -88,10 +88,7 @@ def check_documentation_files():
     required_docs = [
         "README.md",
         "CHANGELOG.md",
-        "LICENSE",
-        "docs/RELEASE_GUIDE.md",
-        "docs/BACKWARD_COMPATIBILITY.md", 
-        "docs/MIGRATION_GUIDE.md"
+        "LICENSE"
     ]
     
     missing_files = []
@@ -107,97 +104,13 @@ def check_documentation_files():
     return True
 
 
-def check_release_guide_completeness():
-    """Check that release guide covers all necessary topics."""
-    print("Checking release guide completeness...")
-    
-    guide_path = Path("docs/RELEASE_GUIDE.md")
-    with open(guide_path, 'r') as f:
-        content = f.read()
-    
-    required_sections = [
-        "Release Process",
-        "Version Numbering", 
-        "Backward Compatibility Policy",
-        "Migration Guides",
-        "Release Automation",
-        "Hotfix Process"
-    ]
-    
-    missing_sections = []
-    for section in required_sections:
-        if section not in content:
-            missing_sections.append(section)
-    
-    if missing_sections:
-        print(f"  ✗ Missing sections in release guide: {', '.join(missing_sections)}")
-        return False
-    
-    print("  ✓ Release guide is complete")
-    return True
-
-
-def check_migration_guide_examples():
-    """Check that migration guide has proper code examples."""
-    print("Checking migration guide examples...")
-    
-    guide_path = Path("docs/MIGRATION_GUIDE.md")
-    with open(guide_path, 'r') as f:
-        content = f.read()
-    
-    # Check for code blocks
-    code_blocks = re.findall(r'```python(.*?)```', content, re.DOTALL)
-    if len(code_blocks) < 5:
-        print(f"  ✗ Migration guide should have more code examples (found {len(code_blocks)})")
-        return False
-    
-    # Check for import examples
-    if "from mcpost import" not in content:
-        print("  ✗ Migration guide missing import examples")
-        return False
-    
-    print(f"  ✓ Migration guide has {len(code_blocks)} code examples")
-    return True
-
-
-def check_backward_compatibility_policy():
-    """Check backward compatibility policy completeness."""
-    print("Checking backward compatibility policy...")
-    
-    policy_path = Path("docs/BACKWARD_COMPATIBILITY.md")
-    with open(policy_path, 'r') as f:
-        content = f.read()
-    
-    required_topics = [
-        "Semantic Versioning",
-        "Public vs Private APIs",
-        "Deprecation Process",
-        "Testing Backward Compatibility"
-    ]
-    
-    missing_topics = []
-    for topic in required_topics:
-        if topic not in content:
-            missing_topics.append(topic)
-    
-    if missing_topics:
-        print(f"  ✗ Missing topics in compatibility policy: {', '.join(missing_topics)}")
-        return False
-    
-    print("  ✓ Backward compatibility policy is complete")
-    return True
-
-
 def validate_links():
     """Validate internal links in documentation."""
     print("Validating documentation links...")
     
     # This is a simplified check - in practice you'd want more sophisticated link checking
     doc_files = [
-        "README.md",
-        "docs/RELEASE_GUIDE.md",
-        "docs/BACKWARD_COMPATIBILITY.md",
-        "docs/MIGRATION_GUIDE.md"
+        "README.md"
     ]
     
     broken_links = []
@@ -235,9 +148,6 @@ def main():
         ("CHANGELOG Format", check_changelog_format),
         ("Version Consistency", check_version_consistency),
         ("Documentation Files", check_documentation_files),
-        ("Release Guide", check_release_guide_completeness),
-        ("Migration Guide", check_migration_guide_examples),
-        ("Compatibility Policy", check_backward_compatibility_policy),
         ("Link Validation", validate_links),
     ]
     
@@ -257,9 +167,7 @@ def main():
         print("🎉 All release documentation checks passed!")
         print("\nRelease documentation is ready. Next steps:")
         print("1. Review all documentation for accuracy")
-        print("2. Test migration guide with real examples")
-        print("3. Validate release process in staging environment")
-        print("4. Update version numbers when ready to release")
+        print("2. Update version numbers when ready to release")
         return 0
     else:
         print("❌ Some release documentation checks failed.")

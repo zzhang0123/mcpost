@@ -119,12 +119,9 @@ jobs:
         - **[Getting Started](docs/tutorials/getting_started.html)** - Your first MCPost analysis
         - **[GSA Tutorial](docs/tutorials/gsa_comprehensive.html)** - Advanced sensitivity analysis
         - **[Extension Guide](docs/extension_guide.html)** - Creating custom methods
-        - **[Migration Guide](docs/MIGRATION_GUIDE.html)** - Migrating from legacy scripts
         
         ## Documentation
         
-        - [Backward Compatibility](docs/BACKWARD_COMPATIBILITY.html)
-        - [Release Guide](docs/RELEASE_GUIDE.html)
         - [Extension Guide](docs/extension_guide.html)
         
         ## Examples
