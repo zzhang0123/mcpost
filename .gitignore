@@ -191,6 +191,5 @@ examples/*.pdf
 *.png
 *.pdf
 
-# Original scripts (keep for reference but don't track changes)
-gsa_pipeline.py
-mc_int.py
+# Original scripts (mock versions for backward compatibility testing)
+# gsa_pipeline.py and mc_int.py are now included for backward compatibility

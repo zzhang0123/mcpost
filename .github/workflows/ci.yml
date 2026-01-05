@@ -56,14 +56,13 @@ jobs:
       run: |
         mypy mcpost
 
-    - name: Test with pytest (skipped for now)
+    - name: Test with pytest
       run: |
-        echo "Tests are temporarily skipped in CI. Run 'pytest tests/' locally for testing."
-        # pytest tests/ --cov=mcpost --cov-report=xml --cov-report=term-missing -v --ignore=tests/test_gsa_backward_compatibility.py --ignore=tests/test_integration_backward_compatibility.py
+        pytest tests/ --cov=mcpost --cov-report=xml --cov-report=term-missing -v
 
-    - name: Upload coverage to Codecov (skipped - no tests run)
-      if: false  # Disabled since tests are skipped
-      uses: codecov/codecov-action@v3
+    - name: Upload coverage to Codecov
+      if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+      uses: codecov/codecov-action@v4
       with:
         file: ./coverage.xml
         flags: unittests
@@ -72,7 +71,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    # Removed dependency on test job since tests are skipped
+    needs: test  # Re-enable dependency on test job
     
     steps:
     - uses: actions/checkout@v4
@@ -101,7 +100,7 @@ jobs:
         python -c "import mcpost; print(f'MCPost version: {mcpost.__version__}')"
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/
@@ -131,7 +130,7 @@ jobs:
         bandit -r mcpost/ -f json -o bandit-report.json || true
 
     - name: Upload security report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: security-report
