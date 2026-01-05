@@ -299,9 +299,9 @@ If you use MCPost in your research, please cite:
 @software{mcpost,
   title={MCPost: Monte Carlo Post-analysis Package},
   author={MCPost Contributors},
-  url={https://github.com/zzhang0123/mcpost},
-  version={0.1.0},
-  year={2024}
+  url={https://zh-zhang.com/mcpost/},
+  version={0.1.2},
+  year={2026}
 }
 ```
 
