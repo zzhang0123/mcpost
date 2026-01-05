@@ -3,6 +3,10 @@ Property-based tests for Integration API backward compatibility.
 
 **Feature: mcpost-package-improvement, Property 2: API Backward Compatibility (Integration)**
 **Validates: Requirements 2.5**
+
+NOTE: These tests require the original mc_int.py file to be present
+in the repository root. They are skipped in CI/CD environments and should
+be run locally during development to verify backward compatibility.
 """
 
 import pytest

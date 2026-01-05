@@ -276,6 +276,34 @@ pip install -e .[dev]
 pytest
 ```
 
+### Testing
+
+MCPost includes a comprehensive test suite:
+
+```bash
+# Run all tests (excludes backward compatibility tests)
+pytest tests/
+
+# Run specific test categories
+pytest tests/test_gsa/          # GSA functionality tests
+pytest tests/test_integration/  # Integration tests
+pytest tests/test_utils/        # Utility tests
+
+# Run property-based tests
+pytest tests/ -k "property"
+
+# Run with coverage
+pytest tests/ --cov=mcpost --cov-report=html
+```
+
+**Backward Compatibility Tests**: These require the original `gsa_pipeline.py` and `mc_int.py` files and are skipped in CI. For local development:
+
+```bash
+# Place original files in repository root, then:
+pytest tests/test_gsa_backward_compatibility.py
+pytest tests/test_integration_backward_compatibility.py
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

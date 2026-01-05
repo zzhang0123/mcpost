@@ -3,6 +3,10 @@ Property-based tests for GSA API backward compatibility.
 
 **Feature: mcpost-package-improvement, Property 2: API Backward Compatibility (GSA)**
 **Validates: Requirements 2.5**
+
+NOTE: These tests require the original gsa_pipeline.py file to be present
+in the repository root. They are skipped in CI/CD environments and should
+be run locally during development to verify backward compatibility.
 """
 
 import pytest
