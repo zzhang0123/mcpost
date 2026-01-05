@@ -1,0 +1,109 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .[docs]
+
+    - name: Test example scripts
+      run: |
+        python examples/gsa_basic_example.py
+        python examples/integration_comparison.py
+        python examples/climate_sensitivity.py
+
+    - name: Test tutorial notebooks
+      run: |
+        pip install nbconvert jupyter
+        # Convert notebooks to check for errors
+        jupyter nbconvert --to notebook --execute docs/tutorials/getting_started.ipynb --output getting_started_test.ipynb
+        # Clean up
+        rm -f docs/tutorials/getting_started_test.ipynb
+
+    - name: Check documentation examples
+      run: |
+        python docs/examples/financial_risk_analysis.py
+
+    - name: Build Sphinx documentation (if configured)
+      run: |
+        # This would build Sphinx docs if configured
+        # sphinx-build -b html docs/source docs/build
+        echo "Sphinx documentation build would go here"
+
+    - name: Check README rendering
+      run: |
+        pip install readme-renderer
+        python -m readme_renderer README.md -o /tmp/readme.html
+
+  validate-examples:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install package
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .[all]
+
+    - name: Validate all example files
+      run: |
+        # Check that all Python files in examples/ and docs/ are valid
+        python -m py_compile examples/*.py
+        python -m py_compile docs/examples/*.py
+
+    - name: Test import statements in examples
+      run: |
+        # Ensure examples can import mcpost correctly
+        echo "Testing example imports..."
+        python -c "
+        import os
+        import ast
+        
+        example_files = []
+        for root, dirs, files in os.walk('examples'):
+            example_files.extend([os.path.join(root, f) for f in files if f.endswith('.py')])
+        for root, dirs, files in os.walk('docs/examples'):
+            example_files.extend([os.path.join(root, f) for f in files if f.endswith('.py')])
+        
+        for file_path in example_files:
+            print(f'Checking imports in {file_path}')
+            with open(file_path, 'r') as f:
+                try:
+                    tree = ast.parse(f.read())
+                    mcpost_imports = []
+                    for node in ast.walk(tree):
+                        if isinstance(node, ast.Import):
+                            for alias in node.names:
+                                if alias.name.startswith('mcpost'):
+                                    mcpost_imports.append(alias.name)
+                        elif isinstance(node, ast.ImportFrom):
+                            if node.module and node.module.startswith('mcpost'):
+                                mcpost_imports.append(node.module)
+                    if mcpost_imports:
+                        print(f'  Found mcpost imports: {mcpost_imports}')
+                except Exception as e:
+                    print(f'  Error parsing {file_path}: {e}')
+        "

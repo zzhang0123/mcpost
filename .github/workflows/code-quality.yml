@@ -1,0 +1,98 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .[dev]
+
+    - name: Run black (formatting)
+      run: |
+        black --check --diff mcpost tests
+
+    - name: Run flake8 (linting)
+      run: |
+        flake8 mcpost tests --max-line-length=88 --extend-ignore=E203,W503
+
+    - name: Run mypy (type checking)
+      run: |
+        mypy mcpost
+
+    - name: Run isort (import sorting)
+      run: |
+        pip install isort
+        isort --check-only --diff mcpost tests
+
+    - name: Check docstring coverage
+      run: |
+        pip install docstr-coverage
+        docstr-coverage mcpost --fail-under=80
+
+  complexity:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install radon xenon
+
+    - name: Check cyclomatic complexity
+      run: |
+        radon cc mcpost --min B
+
+    - name: Check maintainability index
+      run: |
+        radon mi mcpost --min B
+
+    - name: Check complexity with xenon
+      run: |
+        xenon --max-absolute B --max-modules B --max-average A mcpost
+
+  dependencies:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety pip-audit
+
+    - name: Check for security vulnerabilities
+      run: |
+        safety check
+
+    - name: Audit dependencies
+      run: |
+        pip-audit
