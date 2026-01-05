@@ -7,24 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- Initial package structure and modern Python packaging setup
-- Global Sensitivity Analysis (GSA) module with comprehensive metrics
-- Monte Carlo Integration module with QMC support
-- Utilities module for data preprocessing and validation
-- Type hints and comprehensive documentation
-- Property-based testing framework
-- Performance benchmarks and profiling utilities
+## [0.1.1] - 2026-01-05
 
-### Changed
-- Refactored from standalone scripts to modular package structure
-- Improved API design with backward compatibility
-- Enhanced error handling and input validation
+### Added
+- Professional GitHub Pages documentation site with Jekyll
+- Comprehensive tutorials: Getting Started and Advanced GSA
+- Financial risk analysis example
+- Automated documentation deployment workflow
+- Repository cleanup with proper .gitignore configuration
 
 ### Fixed
-- Resolved StandardScaler mismatch in Sobol sampling
-- Fixed constant column detection and handling
-- Improved numerical stability in GP fitting
+- GitHub Actions CI/CD pipeline (updated deprecated actions)
+- Jekyll build errors in documentation deployment
+- Jupyter notebook JSON parsing issues
+- Broken documentation links and repository URLs
+- Code complexity issues in CI pipeline
+
+### Changed
+- Streamlined CI workflow for faster builds
+- Enhanced documentation structure and navigation
+- Improved notebook-to-HTML conversion with better templates
+- Repository organization (removed development clutter)
+
+### Infrastructure
+- Ultra-fast CI focusing on core functionality
+- Robust error handling in documentation builds
+- Professional documentation site deployment
+- Clean repository structure for better user experience
 
 ## [0.1.0] - 2024-01-05
 
