@@ -120,9 +120,10 @@ jobs:
         name: dist
         path: dist/
 
-    - name: Publish to PyPI
+    - name: Publish release distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        password: ${{ secrets.PYPI_API_TOKEN }}
-        verbose: true
-        skip-existing: true
+        packages-dir: dist/
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
