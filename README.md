@@ -17,7 +17,6 @@ MCPost is a comprehensive Python package for post-analysis of Monte Carlo sample
 
 ### Monte Carlo Integration
 - **Standard Monte Carlo** integration with importance sampling
-- **Quasi-Monte Carlo** methods (Sobol, Halton sequences)
 - **Automatic integration** with adaptive sampling strategies
 - **Flexible PDF specification** for target and sampling distributions
 
@@ -37,16 +36,17 @@ MCPost supports multiple installation methods to suit different use cases:
 For core functionality (GSA and integration without plotting):
 
 ```bash
-pip install mcpost
+pip install MC-post
 ```
 
-### Installation with Visualization Support
+### Installation from Source
 
-For full functionality including plotting and visualization:
+For the latest development version:
 
 ```bash
-pip install mcpost[viz]
+pip install git+https://github.com/zzhang0123/mcpost.git
 ```
+
 
 ### Development Installation
 
@@ -64,21 +64,6 @@ pip install -e .[dev]
 pytest
 ```
 
-### Installation from Source
-
-For the latest development version:
-
-```bash
-pip install git+https://github.com/zzhang0123/mcpost.git
-```
-
-### Conda Installation
-
-MCPost will be available on conda-forge (coming soon):
-
-```bash
-conda install -c conda-forge mcpost
-```
 
 ## Quick Start
 
@@ -90,135 +75,83 @@ MCPost provides comprehensive GSA capabilities with multiple sensitivity metrics
 import numpy as np
 from mcpost import gsa_pipeline
 
-# Generate sample data (Ishigami function example)
-np.random.seed(42)
-n_samples = 1000
-X = np.random.uniform(-np.pi, np.pi, (n_samples, 3))
+# Define a simple test function
+def polynomial_function(X):
+    """
+    Simple polynomial: f(x1, x2, x3) = x1^2 + 2*x2 + 0.1*x3
+    
+    We expect x2 to be most influential, x1 moderately influential, 
+    and x3 to have minimal influence.
+    """
+    x1, x2, x3 = X[:, 0], X[:, 1], X[:, 2]
+    return x1**2 + 2*x2 + 0.1*x3
 
-# Ishigami function: f(x1,x2,x3) = sin(x1) + 7*sin(x2)^2 + 0.1*x3^4*sin(x1)
-y = (np.sin(X[:, 0]) + 
-     7 * np.sin(X[:, 1])**2 + 
-     0.1 * X[:, 2]**4 * np.sin(X[:, 0]))
-Y = y.reshape(-1, 1)
+# Generate parameter samples
+n_samples = 1000
+X = np.random.uniform(-1, 1, (n_samples, 3))  # 3 parameters in [-1, 1]
+
+# Evaluate function
+y = polynomial_function(X)
+Y = y.reshape(-1, 1)  # GSA expects 2D array
 
 # Run comprehensive GSA analysis
+# Run GSA analysis
+param_names = ["x1", "x2", "x3"]
+feature_names = ["polynomial"]
+
+print("Running GSA analysis...")
 results = gsa_pipeline(
     X, Y,
-    param_names=["x1", "x2", "x3"],
-    feature_names=["ishigami"],
+    param_names=param_names,
+    feature_names=feature_names,
     scaler="minmax",
     enable_sobol=True,
     enable_gp=True,
     enable_perm=True,
-    make_pdp=True
+    make_pdp=False,  # Skip PDPs for this simple example
+    N_sobol=2048
 )
 
-# View sensitivity results
-print("Sensitivity Analysis Results:")
-print(results["results"]["ishigami"]["table"])
+# Display results
+sensitivity_table = results["results"]["polynomial"]["table"]
+print("\nSensitivity Analysis Results:")
+print(sensitivity_table)
 
-# Plot sensitivity metrics (requires matplotlib)
-from mcpost import plot_sensitivity_metrics
-plot_sensitivity_metrics(results, save_path="sensitivity_plot.png")
-```
 
-### Advanced GSA Usage
-
-```python
-# Custom GSA configuration
-from mcpost import GSAConfig, gsa_for_target
-
-# Configure GSA parameters
-config = GSAConfig()
-config.DEFAULT_SCALER = "standard"
-config.DEFAULT_N_SOBOL = 8192
-
-# Run GSA for specific target
-target_results = gsa_for_target(
-    X, Y[:, 0],  # Single target
-    param_names=["x1", "x2", "x3"],
-    target_name="ishigami",
-    scaler=config.DEFAULT_SCALER,
-    n_sobol=config.DEFAULT_N_SOBOL
-)
 ```
 
 ### Monte Carlo Integration
 
-MCPost supports various integration methods for different use cases:
+Integration with Custom Distributions
 
 ```python
-import numpy as np
-from mcpost import monte_carlo_integral, qmc_integral_auto
-
-# Define integration problem: E[x*sin(y)] where (x,y) ~ N(0,I)
-def target_pdf(theta):
-    """Target probability density function (standard normal)"""
-    return np.exp(-0.5 * np.sum(theta**2, axis=1)) / (2 * np.pi)
+# Define integration problem: E[x^2] where x ~ N(0,1)
+# Analytical solution: 1.0
 
 def integrand(theta):
-    """Function to integrate: f(x,y) = x * sin(y)"""
-    return theta[:, 0] * np.sin(theta[:, 1])
+    """Function to integrate: f(x) = x^2"""
+    return theta[:, 0]**2
+
+def target_pdf(theta):
+    """Standard normal PDF"""
+    return np.exp(-0.5 * theta[:, 0]**2) / np.sqrt(2 * np.pi)
+
+print("Integration Problem: E[X^2] where X ~ N(0,1)")
+print("Analytical solution: 1.0")
+print()
 
 # Method 1: Standard Monte Carlo
-np.random.seed(42)
-theta_samples = np.random.normal(0, 1, (5000, 2))
+n_samples = 5000
+theta_samples = np.random.normal(0, 1, (n_samples, 1))
 f_values = integrand(theta_samples)
 
 mc_result = monte_carlo_integral(theta_samples, f_values, target_pdf)
-print(f"Monte Carlo result: {mc_result['integral']:.6f} ± {mc_result['uncertainty']:.6f}")
 
-# Method 2: Quasi-Monte Carlo (automatic)
-qmc_result = qmc_integral_auto(
-    N_samples=4096,
-    N_params=2, 
-    data_func=integrand,
-    p_target=target_pdf,
-    bounds=[(-4, 4), (-4, 4)]  # Integration bounds
-)
-print(f"QMC result: {qmc_result['integral']:.6f}")
-
-# Method 3: QMC with importance sampling
-from mcpost import qmc_integral_importance
-
-def importance_pdf(theta):
-    """Importance sampling distribution"""
-    return np.exp(-0.25 * np.sum(theta**2, axis=1)) / (4 * np.pi)
-
-qmc_is_result = qmc_integral_importance(
-    N_samples=2048,
-    N_params=2,
-    data_func=integrand,
-    p_target=target_pdf,
-    q_sample=importance_pdf,
-    bounds=[(-3, 3), (-3, 3)]
-)
-print(f"QMC + Importance Sampling: {qmc_is_result['integral']:.6f}")
-```
-
-### Integration with Custom Distributions
-
-```python
-# Example: Integration over custom parameter space
-def custom_target(theta):
-    """Custom target distribution (mixture of Gaussians)"""
-    comp1 = 0.6 * np.exp(-0.5 * np.sum((theta - 1)**2, axis=1))
-    comp2 = 0.4 * np.exp(-0.5 * np.sum((theta + 1)**2, axis=1))
-    return (comp1 + comp2) / (2 * np.pi)
-
-def complex_integrand(theta):
-    """More complex integrand"""
-    return np.exp(theta[:, 0]) * np.cos(theta[:, 1]) * theta[:, 0]**2
-
-# Use adaptive QMC integration
-result = qmc_integral_auto(
-    N_samples=8192,
-    N_params=2,
-    data_func=complex_integrand,
-    p_target=custom_target,
-    bounds=[(-3, 3), (-3, 3)],
-    qmc_method="sobol"  # or "halton"
-)
+print("Standard Monte Carlo:")
+print(f"  Integral estimate: {mc_result['integral'][0]:.6f}")
+print(f"  Uncertainty: {mc_result['uncertainty'][0]:.6f}")
+print(f"  Effective sample size: {mc_result['effective_sample_size']:.0f}")
+print(f"  Error: {abs(mc_result['integral'][0] - 1.0):.6f}")
 ```
 
 ## Documentation and Resources
@@ -242,7 +175,7 @@ result = qmc_integral_auto(
 
 ### Core Dependencies
 - Python 3.8+
-- NumPy >= 1.20.0
+- NumPy >= 1.20.0, <2.4.0
 - Pandas >= 1.3.0
 - Scikit-learn >= 1.0.0
 - SciPy >= 1.7.0
@@ -253,10 +186,6 @@ result = qmc_integral_auto(
 - **Visualization**: matplotlib >= 3.5.0
 - **Development**: pytest, hypothesis, black, mypy
 - **Documentation**: sphinx, jupyter, nbsphinx
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### Development Setup
 
@@ -300,7 +229,7 @@ If you use MCPost in your research, please cite:
   title={MCPost: Monte Carlo Post-analysis Package},
   author={MCPost Contributors},
   url={https://zh-zhang.com/mcpost/},
-  version={0.1.2},
+  version={0.1.3},
   year={2026}
 }
 ```
