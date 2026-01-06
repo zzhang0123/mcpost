@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-01-06
+
+### Changed
+- Updated README.md with improved documentation and examples
+- Enhanced package description and usage instructions
+- Better formatting and structure for user experience
+
+### Documentation
+- Refined installation instructions
+- Improved code examples and explanations
+- Better organization of features and capabilities
+
 ## [0.1.3] - 2026-01-06
 
 ### Fixed

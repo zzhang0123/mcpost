@@ -1,6 +1,6 @@
 """Version information for MCPost package."""
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 # Version components for programmatic access
 VERSION_INFO = tuple(map(int, __version__.split('.')))
