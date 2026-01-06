@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-01-06
+
+### Fixed
+- **Critical**: Fixed NumPy compatibility issue with Numba dependency
+  - Added upper bound constraint: numpy>=1.20.0,<2.4.0
+  - Resolves ImportError when using NumPy 2.4+ (Numba requires NumPy 2.3 or less)
+  - Ensures package can be imported successfully in modern Python environments
+
+### Dependencies
+- Updated NumPy version constraint to prevent compatibility issues with dcor/numba
+
 ## [0.1.2] - 2026-01-05
 
 ### Removed
