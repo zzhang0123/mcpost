@@ -133,7 +133,7 @@ jobs:
         ## Installation
         
         ```bash
-        pip install mcpost
+        pip install MC-post
         ```
         
         For development:
