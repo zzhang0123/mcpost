@@ -28,7 +28,7 @@ The script also **drops constant columns** (e.g., `xh = 0`) before analysis.
 ## 2) Installation
 
 ```bash
-pip install numpy pandas scikit-learn SALib dcor matplotlib
+pip install numpy pandas scikit-learn SALib matplotlib
 ```
 
 > Optional (for advanced GP tuning): `gpytorch` or `gpflow` — *not required* by this pipeline.
@@ -182,7 +182,7 @@ out = gsa_pipeline(X, Y, random_state=0, ...)
 
 ## 13) License & citation
 
-This pipeline is a thin integration of widely used libraries: `scikit-learn`, `SALib`, and `dcor`. Cite those projects if you use them in publications. This script itself can be used freely in your research codebase.
+This pipeline is a thin integration of widely used libraries: `scikit-learn`, `SALib`, and `scipy`. Cite those projects if you use them in publications. This script itself can be used freely in your research codebase.
 
 ---
 

@@ -175,11 +175,10 @@ print(f"  Error: {abs(mc_result['integral'][0] - 1.0):.6f}")
 
 ### Core Dependencies
 - Python 3.8+
-- NumPy >= 1.20.0, <2.4.0
+- NumPy
 - Pandas >= 1.3.0
 - Scikit-learn >= 1.0.0
 - SciPy >= 1.7.0
-- dcor >= 0.5.0
 - SALib >= 1.4.0
 
 ### Optional Dependencies
@@ -239,6 +238,5 @@ If you use MCPost in your research, please cite:
 MCPost builds upon several excellent open-source libraries:
 - [Scikit-learn](https://scikit-learn.org/) for machine learning algorithms
 - [SALib](https://salib.readthedocs.io/) for Sobol' sensitivity analysis
-- [dcor](https://dcor.readthedocs.io/) for distance correlation
-- [SciPy](https://scipy.org/) for scientific computing
+- [SciPy](https://scipy.org/) for scientific computing (including distance correlation)
 - [NumPy](https://numpy.org/) for numerical computing

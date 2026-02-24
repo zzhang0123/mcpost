@@ -14,7 +14,25 @@ from typing import List, Optional, Dict, Any, Tuple
 
 # Screening
 from sklearn.feature_selection import mutual_info_regression
-import dcor  # pip install dcor
+from scipy.spatial.distance import cdist
+
+
+def _distance_correlation(x: np.ndarray, y: np.ndarray) -> float:
+    """Compute distance correlation between two 1-D arrays (pure NumPy/SciPy)."""
+    def _centered(a: np.ndarray) -> np.ndarray:
+        d = cdist(a.reshape(-1, 1), a.reshape(-1, 1))
+        row_mean = d.mean(axis=1, keepdims=True)
+        col_mean = d.mean(axis=0, keepdims=True)
+        grand_mean = d.mean()
+        return d - row_mean - col_mean + grand_mean
+
+    A = _centered(x)
+    B = _centered(y)
+    dcov2 = (A * B).mean()
+    dvar_x = (A * A).mean()
+    dvar_y = (B * B).mean()
+    denom = np.sqrt(dvar_x * dvar_y)
+    return float(np.sqrt(max(dcov2 / denom, 0.0)) if denom > 0 else 0.0)
 
 # Models & utilities
 from sklearn.model_selection import train_test_split
@@ -114,7 +132,7 @@ def screening_metrics(
         }
     
     mi = mutual_info_regression(X, y, random_state=random_state)
-    dcor_vals = np.array([dcor.distance_correlation(X[:, i], y) for i in range(X.shape[1])])
+    dcor_vals = np.array([_distance_correlation(X[:, i], y) for i in range(X.shape[1])])
 
     Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=random_state)
 
